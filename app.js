@@ -1,32 +1,25 @@
-const {readFile, writeFile} = require('fs');
+const EventEmmiter = require('events')
 
-readFile('./content/first.txt', 'utf8', (err, result) => {
-    if(err){
-        console.log(err)
-        return;
-    }
-    console.log(result);
-    const first = result;
-    readFile('./content/second.txt', 'utf8', (err, result) => {
-        if(err){
-            console.log(err);
-            return
-        }
-        console.log(result);
-        const second = result;
+const customEmitter = new EventEmmiter();
 
-        writeFile(
-            './content/result-async.txt',
-            `Halo ini adalah hasilnya: ${first}, ${second}`,
-            (err, result) =>{
-                if(err){
-                    console.log(err);
-                    return
-                }
-                console.log(result);
-                
-            }
-        )
-        
-    })
+customEmitter.on('respond', () => {
+    console.log(`data received`);
 })
+
+customEmitter.on('respond', () => {
+    console.log(`woilah wak`);
+})
+
+customEmitter.emit('respond')
+
+
+// const http = require('http')
+
+// const server = http.createServer()
+
+// server.on('request', (req, res) => {
+//     res.end('welcome')
+
+// })
+
+// server.listen(5000)
